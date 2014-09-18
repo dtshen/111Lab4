@@ -1,0 +1,65 @@
+# Fill in your name, student ID, and email address in this file.
+# If you are working in a team, fill out the information for both team 
+# members.
+
+# SUBMIT THE LAB ONLY ONCE (from only one partner). This file will be
+# automatically parsed in order to give both team members credit for the
+# lab.
+
+# You need to fill in the EXERCISE sections describing your solutions
+# for Tasks 1, 2, and 3, as well as write the corresponding code.
+# If you did one or more extra credit problems, indicate which one in the
+# appropriate section below (remove the # sign first). If you have any other
+# information you'd like us to know, please add it at the end of the file.
+
+# Partner 1
+Name: Dennis Shen 
+Student ID: 004002509
+Email: dtshen2@gmail.com 
+
+# Partner 2 (if you're working in a team)
+Name: 
+Student ID: 
+Email: 
+
+# EXERCISE 1: What method you used to make your peer download and upload
+#    files in parallel?  (~1-3 sentences)
+I used Fork() to create a new process to handle each download/upload
+The key part is to have a blocking wait for all the downloads to finish and to
+use non-blocking waits for the peers.
+# EXERCISE 2A: What conditions did you find and fix that would have
+#    triggered a buffer overrun bug?  (~1-3 sentences each)
+The name could be any length it wanted to be and it would copy the full length.
+# EXERCISE 2B: What other robustness problems did you fix?  (~1-3 sentences
+#    each)
+Peers cannot:
+Requesting files that are not in the current directory 
+Requesting files with names that are too long
+Requesting files that don't exist (directories or normal files)
+Deny a peer that is attempting to send too much data. I set this limit to 100,000 bytes and if it is greater than that it gets set to 100,000.
+
+# EXERCISE 3: Describe the attacks you implemented for "evil mode".  Why
+#    are they attacks?  (~3-10 sentences each)
+Attacks:
+
+Upload:
+evil_mode (2):
+When the victim peer is going to download the attacker will read from the
+beginning of the file, and the victim will keep allocating space for it,
+overflowing its disk space.
+evil_mode (3):
+Instead of serving the file we invert the bits. While this may not seem like
+an attack at first - one could use the principle to inject other threats.
+
+Download:
+evil_mode(4):
+The client will search through the peer list and try to attack each one
+The first set of attacks involve /dev/zero by using absolute accesses and 
+root file directory traversal through ".../"
+Also I  write a buffer to corrupt the stack. This can also be done using
+null bytes instead
+I repeat these attacks 1000 times. 
+# Extra credit problems
+Extra credit problem: Yes
+uncomment the #define EXTRA_CREDIT to implement the extra md5
+# Add any other information you'd like us to know below this line.
